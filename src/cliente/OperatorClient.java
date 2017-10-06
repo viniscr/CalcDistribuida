@@ -9,23 +9,24 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 
 import base.conexao.ServerConnection;
-import base.servidor.TipoServidor;
-import cliente.conexao.PrincipalServerConnection;  
+import base.operator.OperatorType;
+import cliente.conexao.MainServerConnection;  
   
 /** 
- * Cliente
+ * Cliente  
+ *
  * 
  */  
 public class OperatorClient {  
   
-   private List<Double> params = null;  
-   private TipoServidor serverType = null;  
+   private List<Double>     params           = null;  
+   private OperatorType     operatorType     = null;  
      
    private ServerConnection serverConnection = null;  
      
-   public OperatorClient(List<Double> params, TipoServidor serverType) {  
-      this.params = params;  
-      this.serverType = serverType;  
+   public OperatorClient(List<Double> params, OperatorType operatorType) {  
+      this.params       = params;  
+      this.operatorType = operatorType;  
    }  
      
    /** 
@@ -41,7 +42,7 @@ public class OperatorClient {
          throw new IllegalArgumentException("Parâmetros inválidos!");  
       }  
         
-      serverConnection = new PrincipalServerConnection("XMLClient.properties");  
+      serverConnection   = new MainServerConnection("XMLClient.properties");  
       serverConnection.open();  
       Document serverDoc = params2XMLDocument();  
         
@@ -67,7 +68,7 @@ public class OperatorClient {
          root.addContent(param);  
       }  
       Element type = new Element("type");  
-      type.addContent(serverType.toString());  
+      type.addContent(operatorType.toString());  
       root.addContent(type);
       doc.setRootElement(root);  
         
@@ -81,7 +82,7 @@ public class OperatorClient {
     */  
    private boolean isParamsValid() {  
       return this.params != null && this.params.size() > 0   
-          && this.serverType != null;  
+          && this.operatorType != null;  
    }  
      
      

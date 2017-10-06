@@ -19,6 +19,7 @@ import base.xml.XMLDocumentIO;
 /** 
  * Responsável pela conexão com os servidores  
  * 
+ * 
  */  
 public abstract class ServerConnection {  
   

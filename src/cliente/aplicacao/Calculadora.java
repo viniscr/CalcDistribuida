@@ -18,266 +18,267 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import base.servidor.TipoServidor;
+import base.operator.OperatorType;
 import cliente.OperatorClient;
 
 public class Calculadora extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	JButton btsnumericos[];
-	JButton btnback, btnce, btnc;
-	JButton btnoperacoes[], jdb;
+	JButton bnum[];
+	JButton bback, bce, bc;
+	JButton bop[], jdb;
 	JLabel jl;
-	JTextField tfresult;
-	JPanel panel1, panel2, panel3;
+	JTextField tf;
+	JPanel p1, p2, p3;
 	JDialog jd;
 	double d1, d2, d3;
-	boolean fracao = false;
-	String operacao;
+	boolean frac = false;
+//	char op;
+	String op;
 	boolean opc = false, ope = false;
 
 	public Calculadora(String str) {
 
 		super(str);
 
-		btsnumericos = new JButton[10];
+		bnum = new JButton[10];
 		jd = new JDialog(this, "Message", true);
 		jdb = new JButton("OK");
 		jl = new JLabel();
 		jd.setLayout(new FlowLayout());
-		jdb.setMargin(new Insets(5, 5, 5, 5));
+		jdb.setMargin(new Insets(2, 5, 2, 5));
 		jd.add(jl);
 		jd.add(jdb);
 		jdb.addActionListener(this);
 
 		for (int i = 0; i < 10; i++){
-			btsnumericos[i] = new JButton(Integer.toString(i));
-			btsnumericos[i].setBackground(Color.WHITE);
-			btsnumericos[i].setFont(new Font("Arial", Font.BOLD, 20));
+			bnum[i] = new JButton(Integer.toString(i));
+			bnum[i].setBackground(Color.WHITE);
+			bnum[i].setFont(new Font("Arial", Font.BOLD, 14));
 		}
 
-		btnback = new JButton("←");
-		btnback.setBackground(Color.WHITE);
-		btnback.setFont(new Font("Arial", Font.BOLD, 20));
-		btnce = new JButton("CE");
-		btnce.setBackground(Color.WHITE);
-		btnce.setFont(new Font("Arial", Font.BOLD, 20));
-		btnc = new JButton("C");
-		btnc.setBackground(Color.WHITE);
-		btnc.setFont(new Font("Arial", Font.BOLD, 20));
+		bback = new JButton("←");
+		bback.setBackground(Color.WHITE);
+		bback.setFont(new Font("Arial", Font.BOLD, 12));
+		bce = new JButton("CE");
+		bce.setBackground(Color.WHITE);
+		bce.setFont(new Font("Arial", Font.BOLD, 12));
+		bc = new JButton("C");
+		bc.setBackground(Color.WHITE);
+		bc.setFont(new Font("Arial", Font.BOLD, 12));
 
-		panel2 = new JPanel();
-		panel2.setLayout(new FlowLayout());
-		panel2.setBackground(Color.white);
-		panel2.add(btnback);
-		panel2.add(btnce);
-		panel2.add(btnc);
+		p2 = new JPanel();
+		p2.setLayout(new FlowLayout());
+		p2.setBackground(Color.white);
+		p2.add(bback);
+		p2.add(bce);
+		p2.add(bc);
 
-		tfresult = new JTextField(15);
-		panel1 = new JPanel();
-		panel1.setBackground(Color.white);
-		panel1.add(tfresult);
-		tfresult.setEditable(false);
-		tfresult.setHorizontalAlignment(JTextField.RIGHT);
-		tfresult.setText("0");
-		tfresult.setBackground(Color.white);
-		tfresult.setFont(new Font("Arial", Font.BOLD, 22));
+		tf = new JTextField(15);
+		p1 = new JPanel();
+		p1.setBackground(Color.white);
+		p1.add(tf);
+		tf.setEditable(false);
+		tf.setHorizontalAlignment(JTextField.RIGHT);
+		tf.setText("0");
+		tf.setBackground(Color.white);
+		tf.setFont(new Font("Arial", Font.BOLD, 14));
 
-		btnoperacoes = new JButton[10];
-		btnoperacoes[0] = new JButton("+");
-		btnoperacoes[1] = new JButton("-");
-		btnoperacoes[2] = new JButton("*");
-		btnoperacoes[3] = new JButton("/");
-		btnoperacoes[4] = new JButton(".");
-		btnoperacoes[5] = new JButton("=");
-		btnoperacoes[6] = new JButton("%");
-		btnoperacoes[7] = new JButton("Ѵ");
-		btnoperacoes[8] = new JButton("x²");
-		btnoperacoes[9] = new JButton("+/-");
+		bop = new JButton[10];
+		bop[0] = new JButton("+");
+		bop[1] = new JButton("-");
+		bop[2] = new JButton("*");
+		bop[3] = new JButton("/");
+		bop[4] = new JButton(".");
+		bop[5] = new JButton("=");
+		bop[6] = new JButton("%");
+		bop[7] = new JButton("Ѵ");
+		bop[8] = new JButton("x²");
+		bop[9] = new JButton("+/-");
 
 		for (int i = 0; i < 10; i++) {
-			btnoperacoes[i].setMargin(new Insets(5, 5, 5, 5));
-			btnoperacoes[i].addActionListener(this);
-			btnoperacoes[i].setBackground(Color.WHITE);
-			btnoperacoes[i].setFont(new Font("Arial", Font.BOLD, 20));
+			bop[i].setMargin(new Insets(2, 2, 2, 2));
+			bop[i].addActionListener(this);
+			bop[i].setBackground(Color.WHITE);
+			bop[i].setFont(new Font("Arial", Font.BOLD, 12));
 		}
 
-		panel3 = new JPanel();
-		panel3.setLayout(new GridLayout(4, 5, 4 , 5));
-		panel3.setBackground(Color.white);
-		panel3.add(btsnumericos[1]);
-		panel3.add(btsnumericos[2]);
-		panel3.add(btsnumericos[3]);
-		panel3.add(btnoperacoes[0]);
-		panel3.add(btnoperacoes[7]);
-		panel3.add(btsnumericos[4]);
-		panel3.add(btsnumericos[5]);
-		panel3.add(btsnumericos[6]);
-		panel3.add(btnoperacoes[1]);
-		panel3.add(btnoperacoes[8]);
-		panel3.add(btsnumericos[7]);
-		panel3.add(btsnumericos[8]);
-		panel3.add(btsnumericos[9]);
-		panel3.add(btnoperacoes[2]);
-		panel3.add(btnoperacoes[6]);
-		panel3.add(btsnumericos[0]);
-		panel3.add(btnoperacoes[9]);
-		panel3.add(btnoperacoes[4]);
-		panel3.add(btnoperacoes[3]);
-		panel3.add(btnoperacoes[5]);
+		p3 = new JPanel();
+		p3.setLayout(new GridLayout(4, 5, 4 , 5));
+		p3.setBackground(Color.white);
+		p3.add(bnum[1]);
+		p3.add(bnum[2]);
+		p3.add(bnum[3]);
+		p3.add(bop[0]);
+		p3.add(bop[7]);
+		p3.add(bnum[4]);
+		p3.add(bnum[5]);
+		p3.add(bnum[6]);
+		p3.add(bop[1]);
+		p3.add(bop[8]);
+		p3.add(bnum[7]);
+		p3.add(bnum[8]);
+		p3.add(bnum[9]);
+		p3.add(bop[2]);
+		p3.add(bop[6]);
+		p3.add(bnum[0]);
+		p3.add(bop[9]);
+		p3.add(bop[4]);
+		p3.add(bop[3]);
+		p3.add(bop[5]);
 
 		Container c = getContentPane();
 		c.setLayout(new FlowLayout());
-		c.add(panel1);
-		c.add(panel2);
-		c.add(panel3);
+		c.add(p1);
+		c.add(p2);
+		c.add(p3);
 		c.setBackground(Color.WHITE);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 
 		for (int i = 0; i <= 6; i++){
-			btnoperacoes[i].setFont(new Font("Arial", Font.BOLD, 20));
+			bop[i].setFont(new Font("Dialog", Font.BOLD, 13));
 		}
 
 		for (int i = 0; i < 10; i++) {
-			btsnumericos[i].addActionListener(this);
-			btsnumericos[i].setMargin(new Insets(6, 10, 6, 10));
+			bnum[i].addActionListener(this);
+			bnum[i].setMargin(new Insets(2, 10, 2, 10));
 		}
 
-		btnce.addActionListener(this);
-		btnc.addActionListener(this);
-		btnback.addActionListener(this);
+		bce.addActionListener(this);
+		bc.addActionListener(this);
+		bback.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		String s = tfresult.getText();
+		String s = tf.getText();
 		String str;
 
-		if (!fracao){
+		if (!frac){
 			str = s.substring(0, s.length() - 1);
 		} else {
 			str = s;
 		}
 
-		if (ae.getSource() == btnback) {
-			if (fracao) {
+		if (ae.getSource() == bback) {
+			if (frac) {
 
 				if (str.charAt(str.length() - 1) == '.'){
-					fracao = false;
+					frac = false;
 				} else {
-					tfresult.setText(str.substring(0, str.length() - 1));
+					tf.setText(str.substring(0, str.length() - 1));
 				}
 				
 			} else {
 
 				if (!str.equals("0")) {
-					tfresult.setText(str.substring(0, str.length() - 1) + ".");
+					tf.setText(str.substring(0, str.length() - 1) + ".");
 				}
 			}
 
-			if (tfresult.getText().equals(".")){
-				tfresult.setText("0.");
+			if (tf.getText().equals(".")){
+				tf.setText("0.");
 			}
 
-		} else if (ae.getSource() == btnce) {
-			tfresult.setText("0.");
-			fracao = false;
+		} else if (ae.getSource() == bce) {
+			tf.setText("0.");
+			frac = false;
 			opc = false;
 
-		} else if (ae.getSource() == btnc) {
-			tfresult.setText("0.");
+		} else if (ae.getSource() == bc) {
+			tf.setText("0.");
 			d1 = 0;
 			d2 = 0;
-			fracao = false;
+			frac = false;
 			opc = false;
 			ope = false;
 
-		} else if (ae.getSource() == btnoperacoes[0]) {
+		} else if (ae.getSource() == bop[0]) {
 			if (ope) {
 				d2 = Double.parseDouble(str);
-				d3 = calc(d1, d2, operacao);
+				d3 = calc(d1, d2, op);
 				String dn = Double.toString(d3);
 				if (dn.charAt(dn.length() - 1) == '0')
 					dn = dn.substring(0, dn.length() - 1);
-				tfresult.setText(dn);
+				tf.setText(dn);
 				ope = false;
 				str = dn;
 			}
 
 			d1 = Double.parseDouble(str);
 			opc = true;
-			operacao = "+";
+			op = "+";
 
-		} else if (ae.getSource() == btnoperacoes[1]) {
+		} else if (ae.getSource() == bop[1]) {
 
 			if (ope) {
 				d2 = Double.parseDouble(str);
-				d3 = calc(d1, d2, operacao);
+				d3 = calc(d1, d2, op);
 				String dn = Double.toString(d3);
 				
 				if (dn.charAt(dn.length() - 1) == '0'){
 					dn = dn.substring(0, dn.length() - 1);
 				}
 				
-				tfresult.setText(dn);
+				tf.setText(dn);
 				ope = false;
 				str = dn;
 			}
 
 			d1 = Double.parseDouble(str);
 			opc = true;
-			operacao = "-";
+			op = "-";
 			
-		} else if (ae.getSource() == btnoperacoes[2]) {
+		} else if (ae.getSource() == bop[2]) {
 
 			if (ope) {
 				d2 = Double.parseDouble(str);
-				d3 = calc(d1, d2, operacao);
+				d3 = calc(d1, d2, op);
 				String dn = Double.toString(d3);
 				
 				if (dn.charAt(dn.length() - 1) == '0'){
 					dn = dn.substring(0, dn.length() - 1);
 				}
 				
-				tfresult.setText(dn);
+				tf.setText(dn);
 				ope = false;
 				str = dn;
 			}
 
 			d1 = Double.parseDouble(str);
 			opc = true;
-			operacao = "*";
+			op = "*";
 
-		} else if (ae.getSource() == btnoperacoes[3]) {
+		} else if (ae.getSource() == bop[3]) {
 
 			if (ope) {
 				d2 = Double.parseDouble(str);
-				d3 = calc(d1, d2, operacao);
+				d3 = calc(d1, d2, op);
 				String dn = Double.toString(d3);
 				
 				if (dn.charAt(dn.length() - 1) == '0') {
 					dn = dn.substring(0, dn.length() - 1);
 				}
 				
-				tfresult.setText(dn);
+				tf.setText(dn);
 				ope = false;
 				str = dn;
 			}
 
 			d1 = Double.parseDouble(str);
 			opc = true;
-			operacao = "/";
+			op = "/";
 
-		} else if (ae.getSource() == btnoperacoes[4]) {
-			fracao = true;
+		} else if (ae.getSource() == bop[4]) {
+			frac = true;
 
-		} else if (ae.getSource() == btnoperacoes[5]) {
+		} else if (ae.getSource() == bop[5]) {
 
 			if (ope) {
 
 				d2 = Double.parseDouble(str);
-				d3 = calc(d1, d2, operacao);
+				d3 = calc(d1, d2, op);
 				String dn = Double.toString(d3);
 
 				System.out.println(dn);
@@ -286,46 +287,46 @@ public class Calculadora extends JFrame implements ActionListener {
 					dn = dn.substring(0, dn.length() - 1);
 				}
 
-				tfresult.setText(dn);
+				tf.setText(dn);
 				d1 = d3;
 				opc = false;
 				ope = false;
 			}
 
-		} else if (ae.getSource() == btnoperacoes[6]) {
+		} else if (ae.getSource() == bop[6]) {
 
-				double temp = Double.parseDouble(tfresult.getText());
+				double temp = Double.parseDouble(tf.getText());
 				String tmp = calc(temp, 0d, "%") + "";
 				
 				if (tmp.charAt(tmp.length() - 1) == '0'){
 					tmp = tmp.substring(0, tmp.length() - 1);
 				}
 				
-				tfresult.setText(tmp);
+				tf.setText(tmp);
 
-		} else if (ae.getSource() == btnoperacoes[7]) {
+		} else if (ae.getSource() == bop[7]) {
 
-			double temp = Double.parseDouble(tfresult.getText());
+			double temp = Double.parseDouble(tf.getText());
 			String tmp = calc(temp, 0d, "Ѵ") + "";
 			
 			if (tmp.charAt(tmp.length() - 1) == '0'){
 				tmp = tmp.substring(0, tmp.length() - 1);
 			}
 			
-			tfresult.setText(tmp);
+			tf.setText(tmp);
 
-		} else if (ae.getSource() == btnoperacoes[8]) {
-			double temp = Double.parseDouble(tfresult.getText());
+		} else if (ae.getSource() == bop[8]) {
+			double temp = Double.parseDouble(tf.getText());
 			String tmp = calc(temp, 0d, "x²") + "";
 			
 			if (tmp.charAt(tmp.length() - 1) == '0'){
 				tmp = tmp.substring(0, tmp.length() - 1);
 			}
 			
-			tfresult.setText(tmp);
+			tf.setText(tmp);
 
-		} else if (ae.getSource() == btnoperacoes[9]) {
-			double temp = Double.parseDouble(tfresult.getText());
+		} else if (ae.getSource() == bop[9]) {
+			double temp = Double.parseDouble(tf.getText());
 			if (temp != 0) {
 				String tmp = Double.toString(-1 * temp);
 				
@@ -333,10 +334,10 @@ public class Calculadora extends JFrame implements ActionListener {
 					tmp = tmp.substring(0, tmp.length() - 1);
 				}
 				
-				tfresult.setText(tmp);
+				tf.setText(tmp);
 				
 			} else {
-				tfresult.setText("0.");
+				tf.setText("0.");
 			}
 
 		} else if (ae.getSource() == jdb) {
@@ -344,24 +345,24 @@ public class Calculadora extends JFrame implements ActionListener {
 
 		} else {
 			if (opc) {
-				tfresult.setText("0.");
-				fracao = false;
+				tf.setText("0.");
+				frac = false;
 				str = "0";
 				ope = true;
 				opc = false;
 			}
 
-			if (fracao){
-				tfresult.setText(str + ae.getActionCommand());
+			if (frac){
+				tf.setText(str + ae.getActionCommand());
 			}
 			
 			else {
 
 				if (str.equals("0")) {
-					tfresult.setText("");
-					tfresult.setText(ae.getActionCommand() + ".");
+					tf.setText("");
+					tf.setText(ae.getActionCommand() + ".");
 				} else {
-					tfresult.setText(str + ae.getActionCommand() + ".");
+					tf.setText(str + ae.getActionCommand() + ".");
 				}
 			}
 		}
@@ -403,7 +404,7 @@ public class Calculadora extends JFrame implements ActionListener {
 		operacao.add(a);
 		operacao.add(b);
 
-		TipoServidor tipoServidor = TipoServidor.valueOf(op);
+		OperatorType tipoServidor = OperatorType.valueOf(op);
 		OperatorClient client = new OperatorClient (operacao, tipoServidor);
 		
 		try {
@@ -418,7 +419,7 @@ public class Calculadora extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		Calculadora c = new Calculadora("Calculadora");
-		c.setSize(300, 330);
+		c.setSize(235, 250);
 		c.setVisible(true);
 	}
 }
