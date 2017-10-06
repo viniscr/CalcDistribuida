@@ -12,8 +12,7 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
 /** 
- * Responsável pelo recebimento e envio de documentos XML 
- * 
+ * Responsável pelo recebimento e envio de documentos XML entre os servidores
  * 
  */  
 public class XMLDocumentIO {  
