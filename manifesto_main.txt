@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Class-Path: Base.jar jdom.jar
-Main-Class: servidorPrincipal.launch.MainServerLauncher
+Main-Class: servidorPrincipal.launch.PrincipalServerLauncher
 
