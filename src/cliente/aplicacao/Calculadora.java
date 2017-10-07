@@ -399,12 +399,12 @@ public class Calculadora extends JFrame implements ActionListener {
 			break;
 		}
 
-		List<Double> operacao = new ArrayList<Double>();
-		operacao.add(a);
-		operacao.add(b);
+		List<Double> params = new ArrayList<Double>();
+		params.add(a);
+		params.add(b);
 
 		TipoServidor tipoServidor = TipoServidor.valueOf(op);
-		OperatorClient client = new OperatorClient (operacao, tipoServidor);
+		OperatorClient client = new OperatorClient (params, tipoServidor);
 		
 		try {
 			result = client.getValue();

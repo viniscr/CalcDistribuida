@@ -22,14 +22,14 @@ public class EscravoServer implements Runnable {
     private ServerSocket serverSocket = null;  
     private Socket socket = null;  
     private int serverPort = 0;  
-    private TipoServidor operatorType = null;  
+    private TipoServidor tipoServidor = null;  
     private Server operator = null;  
     private boolean canRun = true;  
   
-    public EscravoServer(TipoServidor operatorType) throws IOException,ClassNotFoundException, InstantiationException,  
+    public EscravoServer(TipoServidor tipoServidor) throws IOException,ClassNotFoundException, InstantiationException,  
             IllegalAccessException {  
-        this.operatorType = operatorType;  
-        this.operator = ServerFactory.getOperator(operatorType);  
+        this.tipoServidor = tipoServidor;  
+        this.operator = ServerFactory.getOperator(tipoServidor);  
         loadProperties();  
         serverSocket = new ServerSocket(this.serverPort);  
     }  
@@ -70,12 +70,12 @@ public class EscravoServer implements Runnable {
         FileReader reader = null;  
         Properties properties = null;  
   
-        propFileName = "XMLOperatorServer.properties";  
+        propFileName = "XMLEscravoServer.properties";  
         file = new File(propFileName);  
         reader = new FileReader(file);  
         properties = new Properties();  
         properties.load(reader);  
   
-        this.serverPort = Integer.parseInt(properties.getProperty(this.operatorType + ".port"));  
+        this.serverPort = Integer.parseInt(properties.getProperty(this.tipoServidor + ".port"));  
     }  
 }  

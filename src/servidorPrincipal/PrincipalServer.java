@@ -7,7 +7,7 @@ import java.net.Socket;
 public class PrincipalServer implements Runnable {  
   
    private ServerSocket serverSocket = null;  
-   private boolean      canRun       = true;  
+   private boolean canRun = true;  
      
      
    public PrincipalServer(int serverPort) throws IOException {  
