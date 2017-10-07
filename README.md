@@ -19,6 +19,6 @@ Para testar o projeto:
 5. Durante a alteração, certifique-se que as portas e endereços de (ADD, SUB, MUL, DIV) são as mesmas de BASICO.
    Durante a alteração, certifique-se que as portas e endereços de (RAIZ, POTE, E PORC) são as mesmas de ESPECIAL.
 6. Feito isso:
-    - Execute o jar da pasta servidorPrincipal (PrincipalServer.jar) passando a porta como parâmetro;
+    - Execute via terminal o jar da pasta servidorPrincipal (PrincipalServer.jar) passando a porta como parâmetro;
     - Logo após o da pasta servidorEscravo (EscravoServer.jar) passando (BASICO ou ESPECIAL) como parâmetro e;
     - Por ultimo o da pasta cliente (Client.jar).
